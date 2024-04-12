@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<base target="_top">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<title>Varosha - maps</title>
+	
+	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+	<style>
+		html, body {
+			height: 100%;
+			margin: 0;
+		}
+		.leaflet-container {
+			height: 1000px;
+			width: 1000px;
+			max-width: 100%;
+			max-height: 100%;
+		}
+	</style>
+
+	
+</head>
+<body>
+
+
+
+<div id="map" style="width: 1400px; height: 1000px;"></div>
+<script>
+    var corner1 = L.latLng(35.118163,33.944678),
+    corner2 = L.latLng(35.114577,33.953520),
+    bounds = L.latLngBounds(corner1, corner2);
+	const map = L.map('map',{
+        center: [35.1162,33.9502],
+        zoom: 19,
+        maxZoom: 20,
+        minZoom:16,
+      //  maxBounds: bounds
+    });
+	var sat_layer = L.tileLayer('./leaflet/sat_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
+	var aerial_layer = L.tileLayer('./leaflet/1963_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
+
+	var survey = L.tileLayer('./leaflet/survey/{z}/{x}/{y}.png', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
+
+	const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+	const osm2 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+    var baseMaps = {
+    "Street map": osm2,
+    "1963 Aerial": aerial_layer,
+    "1929 Survey": survey,
+    "Satelite": sat_layer,
+    };
+    
+    const cyta = L.marker([35.115386380790895, 33.949138380488485]).addTo(map)
+    cyta.bindTooltip("Cyta building").openTooltip();
+
+    var layerControl = L.control.layers(baseMaps).addTo(map);
+</script>
+
+
+
+</body>
+</html>
