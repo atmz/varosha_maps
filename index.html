@@ -53,7 +53,7 @@
 	var sat_layer = L.tileLayer('./leaflet/sat_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'})
 	var aerial_layer = L.tileLayer('./leaflet/1963_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
 
-	var survey = L.tileLayer('./leaflet/survey/{z}/{x}/{y}.png', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'})
+	var survey = L.tileLayer('./leaflet/survey_new/{z}/{x}/{y}.png', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'})
 
     var baseMaps = {
     "Street map": osm,
