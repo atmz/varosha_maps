@@ -37,8 +37,9 @@
     var corner1 = L.latLng(35.118163,33.944678),
     corner2 = L.latLng(35.114577,33.953520),
     bounds = L.latLngBounds(corner1, corner2);
+	center = L.latLng(35.1162,33.9502)
 	const map = L.map('map',{
-        center: [35.1162,33.9502],
+        center: center,
         zoom: 18,
         maxZoom: 22,
         minZoom:16,
@@ -46,6 +47,10 @@
     });
 	
 	const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 19,
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+	}).addTo(map);
+	const osm2 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
@@ -59,6 +64,7 @@
     "Street map": osm,
     };
     var overlayMaps = {
+    "Street map": osm2,
     "1963 Aerial": aerial_layer,
     "1929 Survey": survey,
     "Satelite": sat_layer,
@@ -67,9 +73,13 @@
     const cyta = L.marker([35.115386380790895, 33.949138380488485]).addTo(map)
     cyta.bindTooltip("Cyta building").openTooltip();
 
-    var layerControl = L.control.layers({}, overlayMaps,{
+    var layerControl = L.control.layers( overlayMaps,{},{
 			collapsed:false,
 	}).addTo(map);
+	var popup = L.popup({keepInView: true})
+    .setLatLng(center)
+    .setContent('<p>What is this?<br />This is a map of the fenced off city of Varosha,<br /> with layers showing a current satellite view, <br />a 1963 aerial view, <br />and a set of 1929 survey maps.<br /><br />Use the layer controls at top right to <br />control what you see</p>')
+    .openOn(map);
 </script>
 
 
