@@ -39,26 +39,26 @@
     bounds = L.latLngBounds(corner1, corner2);
 	const map = L.map('map',{
         center: [35.1162,33.9502],
-        zoom: 19,
-        maxZoom: 20,
+        zoom: 18,
+        maxZoom: 22,
         minZoom:16,
       //  maxBounds: bounds
     });
-	var sat_layer = L.tileLayer('./leaflet/sat_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
-	var aerial_layer = L.tileLayer('./leaflet/1963_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
-
-	var survey = L.tileLayer('./leaflet/survey/{z}/{x}/{y}.png', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
-
+	
 	const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 		maxZoom: 19,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
-	const osm2 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
+	
+	var sat_layer = L.tileLayer('./leaflet/sat_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'})
+	var aerial_layer = L.tileLayer('./leaflet/1963_jpg/{z}/{x}/{y}.jpg', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'}).addTo(map)
+
+	var survey = L.tileLayer('./leaflet/survey/{z}/{x}/{y}.png', {minZoom: 16, maxZoom: 20, tms: false, attribution: 'Created by QGIS'})
+
     var baseMaps = {
-    "Street map": osm2,
+    "Street map": osm,
+    };
+    var overlayMaps = {
     "1963 Aerial": aerial_layer,
     "1929 Survey": survey,
     "Satelite": sat_layer,
@@ -67,7 +67,9 @@
     const cyta = L.marker([35.115386380790895, 33.949138380488485]).addTo(map)
     cyta.bindTooltip("Cyta building").openTooltip();
 
-    var layerControl = L.control.layers(baseMaps).addTo(map);
+    var layerControl = L.control.layers({}, overlayMaps,{
+			collapsed:false,
+	}).addTo(map);
 </script>
 
 
