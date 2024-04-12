@@ -63,17 +63,26 @@
     var baseMaps = {
     "Street map": osm,
     };
-    var overlayMaps = {
+    var layerMaps = {
     "Street map": osm2,
     "1963 Aerial": aerial_layer,
     "1929 Survey": survey,
     "Satelite": sat_layer,
     };
     
-    const cyta = L.marker([35.115386380790895, 33.949138380488485]).addTo(map)
-    cyta.bindTooltip("Cyta building").openTooltip();
+ a = L.marker([35.115386380790895, 33.949138380488485]).bindTooltip("Cyta building")
+ b = L.marker([35.1152151,33.9545261]).bindTooltip("Hellenic Gymnasium")
+ c = L.marker([35.1115813,33.9498385]).bindTooltip("Agios Nikolaos Church")
+ d = L.marker([35.1168699,33.9573485]).bindTooltip("Agia Triada Church")
+ e = L.marker([35.1187799,33.9516266]).bindTooltip("Agios Ioannis Church")
+ f = L.marker([35.11469994,33.95588472]).bindTooltip("Eidelweiss Cafe")
 
-    var layerControl = L.control.layers( overlayMaps,{},{
+
+	var poi = L.layerGroup([a, b,c,d,e,f]).addTo(map);
+	var overlayMaps = {
+		"Points of Interest": poi
+	}
+    var layerControl = L.control.layers( layerMaps,overlayMaps,{
 			collapsed:false,
 	}).addTo(map);
 	var popup = L.popup({keepInView: true})
