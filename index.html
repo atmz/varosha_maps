@@ -34,24 +34,24 @@
 
 <div id="map" style="width: 1400px; height: 1000px;"></div>
 <script>
-    var corner1 = L.latLng(35.118163,33.944678),
-    corner2 = L.latLng(35.114577,33.953520),
+    var corner1 = L.latLng(35.123819,33.931361),
+    corner2 = L.latLng(35.082100,33.988048),
     bounds = L.latLngBounds(corner1, corner2);
 	center = L.latLng(35.1162,33.9502)
 	const map = L.map('map',{
         center: center,
         zoom: 18,
-        maxZoom: 22,
+        maxZoom: 20,
         minZoom:16,
-      //  maxBounds: bounds
+        maxBounds: bounds
     });
 	
 	const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
+		maxZoom: 20,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 	const osm2 = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
+		maxZoom: 20,
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
 	
