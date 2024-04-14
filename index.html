@@ -69,16 +69,28 @@
     "1963 Aerial": aerial_layer,
     "1929 Survey": survey,
     };
-    
- a = L.marker([35.115386380790895, 33.949138380488485]).bindTooltip("Cyta building")
- b = L.marker([35.1152151,33.9545261]).bindTooltip("Hellenic Gymnasium")
- c = L.marker([35.1115813,33.9498385]).bindTooltip("Agios Nikolaos Church")
- d = L.marker([35.1168699,33.9573485]).bindTooltip("Agia Triada Church")
- e = L.marker([35.1187799,33.9516266]).bindTooltip("Agios Ioannis Church")
- f = L.marker([35.11469994,33.95588472]).bindTooltip("Eidelweiss Cafe")
 
+	marker_setup = [
+		[35.115386380790895, 33.949138380488485, "Cyta building", null],
+		[35.1115813,33.9498385, "Agios Nikolaos Church", null],
+		[35.1168699,33.9573485, "Agia Triada Church", null],
+		[35.1187799,33.9516266, "Agios Ioannis Church", null],
+		[35.11469994,33.95588472, "Eidelweiss Cafe", "./poi/edelweis.jpg"],
+		[35.1171854,33.9580097, "Asperia Hotel", "./poi/asterias_new.jpg"],
+		[35.1141570,33.9549849, "Lykio Ellinidon", "./poi/lykio_ellinidon.jpg" ],
+	]
+	markers = []
+	console.log(marker_setup)
+	for(m of marker_setup) {
+		console.log(m)
+		var string = m[2]
+		if(m[3]) {
+			string = ''.concat(string,"<br><img src='",m[3], "' height='256px' width='256px'/>")
+		}
+		markers.push( L.marker([m[0], m[1]]).bindTooltip(string))
+	}
 
-	var poi = L.layerGroup([a, b,c,d,e,f]).addTo(map);
+	var poi = L.layerGroup(markers).addTo(map);
 	var overlayMaps = {
 		"Points of Interest": poi
 	}
