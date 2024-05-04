@@ -23,7 +23,24 @@
 			width: 1000px;
 			max-width: 100%;
 			max-height: 100%;
-		}
+			}
+		
+	.leaflet-popup-content-wrapper {
+      width: 100vw; /* Set the width of the popup to 100% of the viewport width */
+      max-width: none !important; /* Disable max-width constraint */
+    }
+	.leaflet-popup-content {
+      width: 100% !important; /* Ensure media fills the popup width */
+      max-width: none !important; /* Disable max-width constraint */
+	}
+    .popup-content img, .popup-content video {
+      height: 50% !important; /* Ensure images fill the popup width */
+      width: 90%; /* Ensure media fills the popup width */
+      max-width: 100% !important; /* Ensure images fill the popup width */
+      width: auto !important; /* Override any inline width styles */
+      height: auto !important; /* Override any inline height styles */
+    }
+  </style>
 	</style>
 
 	
@@ -70,25 +87,63 @@
     "1929 Survey": survey,
     };
 
-	marker_setup = [
-		[35.115386380790895, 33.949138380488485, "Cyta building", null],
-		[35.1115813,33.9498385, "Agios Nikolaos Church", null],
-		[35.1168699,33.9573485, "Agia Triada Church", null],
-		[35.1187799,33.9516266, "Agios Ioannis Church", null],
-		[35.11469994,33.95588472, "Eidelweiss Cafe", "./poi/edelweis.jpg"],
-		[35.1171854,33.9580097, "Asperia Hotel", "./poi/asterias_new.jpg"],
-		[35.1141570,33.9549849, "Lykio Ellinidon", "./poi/lykio_ellinidon.jpg" ],
-	]
-	markers = []
-	console.log(marker_setup)
-	for(m of marker_setup) {
-		console.log(m)
-		var string = m[2]
-		if(m[3]) {
-			string = ''.concat(string,"<br><img src='",m[3], "' height='256px' width='256px'/>")
+	var locations = [
+		{
+			coords: [35.1155655,33.9486951],
+			media: "./poi/5_EDISON.webm",
+			text: "5 Edison St<br>Home of Panayiotis and Ioulia Toumazis, and their children Elena and Tonis."
+		},
+		{
+			coords: [35.1115813, 33.9498385],
+			media: null,
+			text: "Agios Nikolaos Church"
+		},
+		{
+			coords: [35.1168699, 33.9573485],
+			media: null,
+			text: "Agia Triada Church"
+		},
+		{
+			coords: [35.1187799, 33.9516266],
+			media: null,
+			text: "Agios Ioannis Church"
+		},
+		{
+			coords: [35.11469994, 33.95588472],
+			media: "./poi/edelweis_old.jpg",
+			text: "Eidelweiss Cafe"
+		},
+		{
+			coords: [35.1171854, 33.9580097],
+			media: "./poi/asterias_old.jpg",
+			text: "Asperia Hotel",
+			title: "Asperia Hotel"
+		},
+		{
+			coords: [35.1141570, 33.9549849],
+			media: "./poi/lykio_ellinidon.jpg",
+			text: "Lykio Ellinidon"
 		}
-		markers.push( L.marker([m[0], m[1]]).bindTooltip(string))
-	}
+	];
+	markers = []
+	locations.forEach(function(location) {
+		var marker = L.marker(location.coords)
+		
+		// Define the popup content with either image or video and text
+		var popupContent = '<div class="popup-content">';
+		if (location.media !== null) {
+			if (location.media.endsWith('.mp4') || location.media.endsWith('.webm')) {
+				popupContent += '<video autoplay><source src="' + location.media + '" type="video/mp4">Your browser does not support the video tag.</video>';
+			} else {
+				popupContent += '<img src="' + location.media + '">';
+			}
+		}
+		popupContent += '<p>' + location.text + '</p></div>';
+
+		// Bind the popup content to the marker
+		marker.bindPopup(popupContent);
+		markers.push(marker)
+	});
 
 	var poi = L.layerGroup(markers).addTo(map);
 	var overlayMaps = {
